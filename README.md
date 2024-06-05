@@ -7,18 +7,22 @@ minutiae-based fingerprint matching algorithm
 - 코드는 데이터베이스에 등록된 지문과 가장 유사한 지문을 반환하도록 한다.
 
 ### Preprocessing
-<b>(1) Binarization</b> <br>
+<b>(1) Binarization</b> 
+
 - 주어진 threshold 이상의 픽셀 값들은 1, 이하의 값들은 0으로 치환한다.
 - 이 프로젝트에서는 threshold를 128로 설정했다.
 <br>
 <b>(2) Skeletonization</b> <br>
+
 - 융선의 굵기를 가늘게 처리하여, minutiae를 잘 추출할 수 있도록 한다.
 <br>
 <b>(3) Morph and Dilate</b> <br>
-- `cv2.MORPH_RECT()`, `cv2.dilate()`를 적용해 끊어진 지문이나 fingerprint 이미지의 noise를 제거한다.
+
+- `cv2.MORPH_RECT()` , `cv2.dilate()`를 적용해 끊어진 지문이나 fingerprint 이미지의 noise를 제거한다.
 
 <br>
-각 이미지에 대한 전처리 결과가 완료되면, 'results/preprocessed` 경로에 다음과 같은 전처리 결과가 저장된다. <br>
+
+각 이미지에 대한 전처리 결과가 완료되면, `results/preprocessed` 경로에 다음과 같은 전처리 결과가 저장된다. <br>
 왼쪽부터 순서대로 `Original Image`, `Binarized`, `Skeletionized`, `Morphed and Dilated` 결과이다. <br>
 
 ![Alt text](preprocessed_example.png)
