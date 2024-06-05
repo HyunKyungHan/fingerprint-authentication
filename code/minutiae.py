@@ -29,27 +29,23 @@ def match_minutiae(minutiae_list1, minutiae_list2, spatial_threshold=15, angular
                 break  # Assuming each minutiae in list1 matches with at most one in list2
     return matched_pairs
 
-def calculate_similarity_score(matched_pairs, total_minutiae):
-    return len(matched_pairs) / total_minutiae
 
-
-def feat_extraction(img):
+def feat_extraction(FeatTerm, FeatBif):
     '''
-    input: skeletonized image
+    input: FeaturesTerminations, FeaturesBifurcations (result of extract_minutiae_features)
     output: [(x1, y1, angle1), (x2, y2, angle2), ...] of Termination and Bifurcation points
     '''
-    FeaturesTerminations, FeaturesBifurcations, term_cnt, min_cnt = extract_minutiae_features(img=img, showResult=True)
     # Add to class Minutiae
     Minutiae_input = []
-    for idx, curr_minutiae in enumerate(FeaturesBifurcations):
+    for idx, curr_minutiae in enumerate(FeatTerm):
         row, col = curr_minutiae.locX, curr_minutiae.locY, 
         orientation, type = curr_minutiae.Orientation, curr_minutiae.Type
-        print(row, col, orientation[0])
+        # print(row, col, orientation[0])
         Minutiae_input.append(Minutiae(row, col, orientation[0]))
-    for idx, curr_minutiae in enumerate(FeaturesTerminations):
+    for idx, curr_minutiae in enumerate(FeatBif):
         row, col = curr_minutiae.locX, curr_minutiae.locY, 
         orientation, type = curr_minutiae.Orientation, curr_minutiae.Type
-        print(row, col, float(orientation[0]))
+        # print(row, col, float(orientation[0]))
         Minutiae_input.append(Minutiae(row, col, orientation[0]))
 
     return Minutiae_input

@@ -1,6 +1,7 @@
 ################## PREPROCESSING UTILS ###################
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 from skimage.morphology import skeletonize as skelt
 
 def skeletonize(image_input):
@@ -22,7 +23,6 @@ def enhance_skelt(img, ks=3):
     ))
     
     rows, cols = img.shape[:2]
-    print(rows, cols)
     img_filtered = np.zeros(img.shape, dtype=np.uint8)
     
     for i in range(1,rows-1):
@@ -35,7 +35,7 @@ def enhance_skelt(img, ks=3):
     
     return img_filtered
 
-def read_and_preprocess(img):
+def read_and_preprocess(img, idx, save_image):
     # 1. READ IMAGE
     ks = 3
     # kernel = np.ones((ks, ks)) / (ks*ks)
@@ -44,10 +44,8 @@ def read_and_preprocess(img):
         [-1, 0, 1],
         [-1, 0, 1]
     ))
-    print(kernel)
 
     rows, cols = img.shape[:2]
-    print(rows, cols)
     img_filtered = np.zeros(img.shape, dtype=np.uint8)
 
     for i in range(1,rows-1):
@@ -60,7 +58,6 @@ def read_and_preprocess(img):
                         result += img[i-ks//2+k_i, j-ks//2+k_j] * kernel[(len(kernel)-1)-k_i, (len(kernel)-1)-k_j]  # convolution
                 img_filtered[i, j] = int(result) if result > 0 else 0
 
-    print(img.max(), img_filtered.max())
 
     kernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     dst = cv2.dilate(img_filtered, kernel2)
@@ -68,15 +65,10 @@ def read_and_preprocess(img):
     skel = skeletonize(dst)
     skel = 255 - skel
 
+    if save_image:
+        merged = np.hstack((img_filtered, dst, skel))
+        plt.figure(figsize=(15, 17), facecolor='white')
+        plt.title('Binarization & Skeletonization Result')
+        plt.imsave(f'results/preprocessed/{idx}_preprocessed.png', merged, cmap='gray')
+
     return skel
-
-
-
-def calculate_similarity(minutiae_list1, minutiae_list2):
-    matched_pairs = match_minutiae(minutiae_list1, minutiae_list2)
-    similarity_score = calculate_similarity_score(matched_pairs, max(len(minutiae_list1), len(minutiae_list2)))
-
-    print(f'Matched Pairs: {matched_pairs}')
-    print(f'Similarity Score: {similarity_score:.2f}')
-
-    return similarity_score
