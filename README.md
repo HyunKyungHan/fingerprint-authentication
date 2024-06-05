@@ -7,7 +7,7 @@ minutiae-based fingerprint matching algorithm
 - 코드는 데이터베이스에 등록된 지문과 가장 유사한 지문을 반환하도록 한다.
 
 ### Preprocessing
-<b>(1) Binarization</b> 
+<b>(1) Binarization</b> <br>
 
 - 주어진 threshold 이상의 픽셀 값들은 1, 이하의 값들은 0으로 치환한다.
 - 이 프로젝트에서는 threshold를 128로 설정했다.
@@ -38,7 +38,8 @@ Termination은 파란색, Bifurcation은 빨간색으로 표시된다. <br>
 ### Matching
 - query set에 있는 모든 이미지에 대해, database 중 어떤 이미지와 가장 높은 Similarity를 가지는 지 계산해 <b>best similarity</b>를 가지는 데이터를 matching set으로 선정한다.
 - 각 iteration마다 Similarity Score를 출력하고, 하나의 query에 대해 모든 database와의 비교가 종료되면, Best Similarity를 출력한다. <br>
-![Alt text](image-2.png)
+
+<img src="image-2.png" alt="console output for assessment" height="170">
 
 ### Evaluation Metrics
 - `database`의 label을 answer[] 리스트에, `best matching set`의 label을 matches[] 리스트에 저장한다.
