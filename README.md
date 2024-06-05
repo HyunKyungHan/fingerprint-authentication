@@ -20,7 +20,8 @@ minutiae-based fingerprint matching algorithm
 <br>
 각 이미지에 대한 전처리 결과가 완료되면, 'results/preprocessed` 경로에 다음과 같은 전처리 결과가 저장된다. <br>
 왼쪽부터 순서대로 `Original Image`, `Binarized`, `Skeletionized`, `Morphed and Dilated` 결과이다. <br>
-![Alt text](<Untitled (13).png>)
+
+![Alt text](preprocessed_example.png)
 
 ### Minutiae Detection
 - <b>feat_extraction.py</b> 파일에서 입력 이미지의 minutiae들을 detect한 후, <b>[(x1, y1, angle1), (x2, y2, angle2), ...]</b> 형식으로 리스트에 담아 반환한다.
